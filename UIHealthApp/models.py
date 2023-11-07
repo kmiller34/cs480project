@@ -37,7 +37,7 @@ class VaccinationScheduling(models.Model):
     nurseID = models.ForeignKey("Nurse", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
     timeSlot = models.DateField()
     vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
-class vaccinationRecord(models.Model):
+class VaccinationRecord(models.Model):
     patientID = models.ForeignKey("Patient", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
     nurseID = models.ForeignKey("Nurse", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
     vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
