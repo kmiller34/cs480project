@@ -17,6 +17,7 @@ class Patient(models.Model):
     medicalHistory = models.CharField(max_length = 200, default = 'None')
     occupationalClass = models.CharField(max_length = 100, default = 'None')
     phoneNumber = models.CharField(max_length = 10,validators = [validate_length], default = '1234567890')
+    username = models.ForeignKey("Credentials",max_length = 10, default = "default", on_delete=models.SET_DEFAULT)
 class Nurse(models.Model):
     employeeID = models.CharField(primary_key = True, max_length = 9, validators = [IDVarifier],default = '123456789')
     address = models.CharField(max_length = 50, default = '124 fake st')
@@ -24,6 +25,7 @@ class Nurse(models.Model):
     phoneNumber = models.CharField(max_length = 10,validators = [validate_length], default = '1234567890')
     gender = models.CharField(default = 'None', max_length = 6)
     name = models.CharField(default = 'None', max_length = 20)
+    username = models.ForeignKey("Credentials",max_length = 10, default = "default", on_delete=models.SET_DEFAULT)
 class Vaccine(models.Model):
     vaccineID = models.CharField(primary_key = True, max_length = 9, validators = [IDVarifier],default = '123456789')
     companyName = models.CharField(max_length = 50, default = 'Fake Company')
@@ -42,3 +44,7 @@ class VaccinationRecord(models.Model):
     nurseID = models.ForeignKey("Nurse", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
     vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
     doses = models.IntegerField(default = 0)
+class Credentials(models.Model):
+    password = models.CharField(max_length = 30)
+    username = models.CharField(primary_key = True, max_length = 10,default = "default")
+    position = models.CharField(max_length = 10)

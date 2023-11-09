@@ -15,5 +15,8 @@ urlpatterns=[
     re_path(r'^vaccinationRecord/([0-9]+)$', views.vaccinationRecordApi),
 
     re_path(r'^vaccinationScheduling$',views.vaccinationSchedulingApi),
-    re_path(r'^vaccinationScheduling/([0-9]+)$', views.vaccinationSchedulingApi)
+    re_path(r'^vaccinationScheduling/([0-9]+)$', views.vaccinationSchedulingApi),
+
+    re_path(r'^credentials$',views.credentialsApi),
+    re_path(r'^credentials/([0-9]+)$', views.credentialsApi)
 ]

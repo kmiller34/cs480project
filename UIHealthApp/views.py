@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from UIHealthApp.models import Patient,Nurse,Vaccine,VaccinationScheduling,VaccinationRecord
-from UIHealthApp.serializers import PatientSerializer,NurseSerializer,VaccineSerializer,VaccinationSchedulingSerializer,VaccinationRecordSerializer
+from UIHealthApp.models import Patient,Nurse,Vaccine,VaccinationScheduling,VaccinationRecord, Credentials
+from UIHealthApp.serializers import PatientSerializer,NurseSerializer,VaccineSerializer,VaccinationSchedulingSerializer,VaccinationRecordSerializer, CredentialsSerializer
 
 # Create your views here.
 
@@ -136,4 +136,30 @@ def vaccinationSchedulingApi(request, id = 0):
     elif request.method=='DELETE':
         vaccinationScheduling=VaccinationScheduling.objects.get(VaccinationSchedulingID=id)
         vaccinationScheduling.delete()
+        return JsonResponse("Deleted Success")
+
+@csrf_exempt
+def credentialsApi(request, id = 0):
+    if request.method == 'GET':
+        credentials = Credentials.objects.all()
+        credentials_serializer = CredentialsSerializer(credentials,many=True)
+        return JsonResponse(credentials_serializer.data,safe=False)
+    elif request.method == 'POST':
+        credentials_data = JSONParser().parse(request)
+        credentials_serializer = CredentialsSerializer(data=credentials_data)
+        if credentials_serializer.is_valid():
+            credentials_serializer.save()
+            return JsonResponse("Added Successfully", safe=False)
+        return JsonResponse("Failed to Add", safe=False)
+    elif request.method=='PUT':
+        credentials_data=JSONParser().parse(request)
+        credentials=Credentials.objects.get(CredentialsID=credentials_data['CredentialsID'])
+        credentials_serializer=CredentialsSerializer(credentials,data=credentials_data)
+        if credentials_serializer.is_valid():
+            credentials_serializer.save()
+            return JsonResponse("Update Successfully", safe=False)
+        return JsonResponse("Failed to Update")
+    elif request.method=='DELETE':
+        credentials=Credentials.objects.get(CredentialsID=id)
+        credentials.delete()
         return JsonResponse("Deleted Success")
