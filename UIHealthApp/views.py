@@ -23,14 +23,14 @@ def patientApi(request, id = 0):
         return JsonResponse("Failed to Add", safe=False)
     elif request.method=='PUT':
         patient_data=JSONParser().parse(request)
-        patient=Patient.objects.get(PatientID=patient_data['PatientID'])
+        patient=Patient.objects.get(ssn=patient_data['ssn'])
         patient_serializer=PatientSerializer(patient,data=patient_data)
         if patient_serializer.is_valid():
             patient_serializer.save()
             return JsonResponse("Update Successfully", safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        patient=Patient.objects.get(PatientID=id)
+        patient=Patient.objects.get(ssn=id)
         patient.delete()
         return JsonResponse("Deleted Success")
 
@@ -49,14 +49,14 @@ def nurseApi(request, id = 0):
         return JsonResponse("Failed to Add", safe=False)
     elif request.method=='PUT':
         nurse_data=JSONParser().parse(request)
-        nurse=Nurse.objects.get(NurseID=nurse_data['NurseID'])
+        nurse=Nurse.objects.get(employeeID=nurse_data['employeeID'])
         nurse_serializer=NurseSerializer(nurse,data=nurse_data)
         if nurse_serializer.is_valid():
             nurse_serializer.save()
             return JsonResponse("Update Successfully", safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        nurse=Nurse.objects.get(NurseID=id)
+        nurse=Nurse.objects.get(employeeID=id)
         nurse.delete()
         return JsonResponse("Deleted Success")
 
@@ -101,14 +101,14 @@ def vaccinationRecordApi(request, id = 0):
         return JsonResponse("Failed to Add", safe=False)
     elif request.method=='PUT':
         vaccinationRecord_data=JSONParser().parse(request)
-        vaccinationRecord=VaccinationRecord.objects.get(VacciantionRecordID=vaccinationRecord_data['VaccinationRecordID'])
+        vaccinationRecord=VaccinationRecord.objects.get(recordID=vaccinationRecord_data['recordID'])
         vaccinationRecord_serializer=VaccinationRecordSerializer(vaccinationRecord,data=vaccinationRecord_data)
         if vaccinationRecord_serializer.is_valid():
             vaccinationRecord_serializer.save()
             return JsonResponse("Update Successfully", safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        vaccinationRecord=VaccinationRecord.objects.get(VaccinationRecordID=id)
+        vaccinationRecord=VaccinationRecord.objects.get(recordID=id)
         vaccinationRecord.delete()
         return JsonResponse("Deleted Success")
 
@@ -127,14 +127,14 @@ def vaccinationSchedulingApi(request, id = 0):
         return JsonResponse("Failed to Add", safe=False)
     elif request.method=='PUT':
         vaccinationScheduling_data=JSONParser().parse(request)
-        vaccinationScheduling=VaccinationScheduling.objects.get(VaccinationSchedulingID=vaccinationScheduling_data['VaccinationSchedulingID'])
+        vaccinationScheduling=VaccinationScheduling.objects.get(vaccID=vaccinationScheduling_data['vaccID'])
         vaccinationScheduling_serializer=VaccinationSchedulingSerializer(vaccinationScheduling,data=vaccinationScheduling_data)
         if vaccinationScheduling_serializer.is_valid():
             vaccinationScheduling_serializer.save()
             return JsonResponse("Update Successfully", safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        vaccinationScheduling=VaccinationScheduling.objects.get(VaccinationSchedulingID=id)
+        vaccinationScheduling=VaccinationScheduling.objects.get(vaccID=id)
         vaccinationScheduling.delete()
         return JsonResponse("Deleted Success")
 
@@ -153,13 +153,13 @@ def credentialsApi(request, id = 0):
         return JsonResponse("Failed to Add", safe=False)
     elif request.method=='PUT':
         credentials_data=JSONParser().parse(request)
-        credentials=Credentials.objects.get(CredentialsID=credentials_data['CredentialsID'])
+        credentials=Credentials.objects.get(username=credentials_data['username'])
         credentials_serializer=CredentialsSerializer(credentials,data=credentials_data)
         if credentials_serializer.is_valid():
             credentials_serializer.save()
             return JsonResponse("Update Successfully", safe=False)
         return JsonResponse("Failed to Update")
     elif request.method=='DELETE':
-        credentials=Credentials.objects.get(CredentialsID=id)
+        credentials=Credentials.objects.get(username=id)
         credentials.delete()
         return JsonResponse("Deleted Success")

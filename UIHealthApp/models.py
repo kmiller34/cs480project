@@ -5,10 +5,11 @@ from django.db import models
 def validate_length(phone):
     if not (phone.isdigit() and len(phone) == 10):
         raise ValidateError('%(phone)s must be 10 digits', params={'phone':phone})
-def IDVarifier(id):
-    if not (id.isdigit() and len(id) == 9):
-        raise ValidateError('%(id)s must be 9 digits', params={'id':id})
+def IDVarifier(identity):
+    if not (identity.isdigit() and len(identity) == 9):
+        raise ValidateError('%(id)s must be 9 digits', params={'identity':id})
 class Patient(models.Model):
+    name = models.CharField(max_length = 50, default = "None")
     ssn = models.CharField(primary_key = True, max_length = 9)
     address = models.CharField(max_length = 50,default = '123 fake st')
     age = models.IntegerField(default = 0)
@@ -35,14 +36,16 @@ class Vaccine(models.Model):
     onHold = models.IntegerField(default = 0)
     textDesc = models.CharField(max_length = 200, default = 'None')
 class VaccinationScheduling(models.Model):
-    patientID = models.ForeignKey("Patient", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
-    nurseID = models.ForeignKey("Nurse", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
-    timeSlot = models.DateField()
-    vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
+    vaccID = models.AutoField(primary_key = True, default = 1)
+    patientID = models.ForeignKey("Patient", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
+    nurseID = models.ForeignKey("Nurse", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
+    timeSlot = models.CharField(max_length = 30, default = "None")
+    # vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
 class VaccinationRecord(models.Model):
-    patientID = models.ForeignKey("Patient", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
-    nurseID = models.ForeignKey("Nurse", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
-    vaccineID = models.ForeignKey("Vaccine", max_length = 9, validators = [IDVarifier],default = '123456789',on_delete=models.SET_DEFAULT)
+    recordID = models.AutoField(primary_key = True, default = 1)
+    patientID = models.ForeignKey("Patient", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
+    nurseID = models.ForeignKey("Nurse", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
+    vaccineID = models.ForeignKey("Vaccine", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
     doses = models.IntegerField(default = 0)
 class Credentials(models.Model):
     password = models.CharField(max_length = 30)
