@@ -47,6 +47,7 @@ class VaccinationRecord(models.Model):
     nurseID = models.ForeignKey("Nurse", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
     vaccineID = models.ForeignKey("Vaccine", max_length = 9,default = '123456789',on_delete=models.SET_DEFAULT)
     doses = models.IntegerField(default = 0)
+    timeSlot = models.CharField(max_length = 40, default = 0)
 class Credentials(models.Model):
     password = models.CharField(max_length = 30)
     username = models.CharField(primary_key = True, max_length = 10,default = "default")

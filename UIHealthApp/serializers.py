@@ -17,22 +17,21 @@ class VaccineSerializer(serializers.ModelSerializer):
         fields = ('vaccineID', 'companyName', 'name', 'doses', 'availability', 'onHold', 'textDesc')
 
 class VaccinationSchedulingSerializer(serializers.ModelSerializer):
-    patientID = PatientSerializer()
-    nurseID = NurseSerializer()
+
     class Meta:
         model = VaccinationScheduling 
         fields = ('vaccID','patientID', 'nurseID', 'timeSlot')
 
 class VaccinationRecordSerializer(serializers.ModelSerializer):
-    patientID = PatientSerializer()
-    nurseID = NurseSerializer()
-    vaccineID = VaccineSerializer()
+
     class Meta:
         model = VaccinationRecord 
-        fields = ('recordID','patientID', 'nurseID', 'vaccineID', 'doses')
+        fields = ('recordID','patientID', 'nurseID', 'vaccineID', 'doses', 'timeSlot')
 
 class CredentialsSerializer(serializers.ModelSerializer):
     class Meta:
+        patientID = PatientSerializer()
+        nurseID = NurseSerializer()
         model = Credentials
         fields = ('password', 'username', 'position')
 
